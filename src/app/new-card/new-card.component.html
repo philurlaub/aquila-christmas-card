@@ -1,0 +1,114 @@
+<div nxLayout="grid">
+  <div nxRow class="nx-margin-top-2xl margin-box" nxRowJustify="around">
+    <nx-card style="width: 720px">
+      <h3 nxHeadline="subsection-medium" class="nx-font-weight-bold">
+        Create a new chrismas card!
+      </h3>
+      <div class="nx-margin-bottom-m">
+        Reprehenderit irure labore incididunt cupidatat do commodo mollit ipsum
+        aliquip. Tempor Lorem proident minim consequat. Laboris id sint commodo
+        eiusmod veniam eu. Aute ut est velit exercitation laboris. Tempor
+        consectetur quis reprehenderit sunt eiusmod excepteur velit. Commodo
+        sint duis dolore irure cupidatat aliqua esse.
+      </div>
+
+      <form [formGroup]="formGroup">
+        <div nxLayout="grid nogutters">
+          <div nxRow>
+            <div nxCol="12,6">
+              <nx-formfield nxLabel="From (name)" class="nx-margin-right-s">
+                <input nxInput formControlName="firstName" />
+                <nx-error nxFormfieldError> Your name is missing. </nx-error>
+              </nx-formfield>
+            </div>
+
+            <div nxCol="12,6">
+              <nx-formfield nxLabel="To (name)">
+                <input nxInput formControlName="lastName" />
+                <nx-error nxFormfieldError>
+                  Enter the name of the receiver.
+                </nx-error>
+              </nx-formfield>
+            </div>
+
+            <div nxCol="12">
+              <nx-formfield nxLabel="Choose design">
+                <nx-dropdown formControlName="design">
+                  <nx-dropdown-item nxValue="1">1</nx-dropdown-item>
+                  <nx-dropdown-item nxValue="2">2</nx-dropdown-item>
+                  <nx-dropdown-item nxValue="3">3</nx-dropdown-item>
+                </nx-dropdown>
+                <nx-icon
+                  nxFormfieldAppendix
+                  name="exclamation-circle"
+                  [nxPopoverTriggerFor]="cardPopover"
+                  nxPopoverTrigger="hover"
+                >
+                </nx-icon>
+                <nx-error nxFormfieldError> Please select an option. </nx-error>
+              </nx-formfield>
+            </div>
+          </div>
+          <div nxRow>
+            <div nxCol="12">
+              <nx-formfield nxLabel="Card headline">
+                <input nxInput formControlName="headline" />
+                <nx-error nxFormfieldError>
+                  A card headline is missing.
+                </nx-error>
+              </nx-formfield>
+
+              <nx-formfield
+                nxLabel="Your christmas message ({{ characterCount() }} of {{
+                  maxMessageCharaters
+                }} characters)"
+              >
+                <textarea nxInput formControlName="text" type="text"></textarea>
+                <nx-error nxFormfieldError>
+                  Please enter your christmas message.
+                </nx-error>
+              </nx-formfield>
+            </div>
+          </div>
+          <div nxRow class="nx-margin-top-s">
+            <div nxCol="12">
+              <button
+                class="nx-margin-right-m"
+                nxButton
+                type="button"
+                [disabled]="formGroup.invalid"
+                (click)="showCard()"
+              >
+                Show Card
+              </button>
+              <button
+                nxButton
+                class="nx-margin-right-xs"
+                (click)="openFromTemplate()"
+              >
+                Send Card
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <nx-popover #cardPopover>
+        <ol nxList="big">
+          <li><img width="300" src="/assets/card_front_1.jpg" /></li>
+          <li><img width="300" src="/assets/card_back.jpg" /></li>
+        </ol>
+      </nx-popover>
+    </nx-card>
+
+    <ng-template #template>
+      <div nxModalContent>
+        <h3 nxHeadline="subsection-medium">No close on click outside</h3>
+        <p nxCopytext="small">
+          This modal view will not close on click outside or ESC. You need to
+          use the action buttons.
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</div>
