@@ -95,15 +95,16 @@
 
       <nx-popover #cardPopover>
         <ol nxList="big">
-          <li><img width="300" src="assets/card_front_1.jpg" /></li>
-          <li><img width="300" src="assets/card_back.jpg" /></li>
+          <li><img width="300" src="assets/card_front_1.svg" /><div>by Alex</div></li>
+          <li><img width="300" src="assets/card_front_2.svg" /><div>by Breann</div></li>
+          <li><img width="300" src="assets/card_front_3.svg" /><div>by Bobby</div></li>
         </ol>
       </nx-popover>
     </nx-card>
 
     <ng-template #template>
       <div nxModalContent>
-        <h3 nxHeadline="subsection-medium">No close on click outside</h3>
+        <h3 nxHeadline="subsection-medium">Copy the link below!</h3>
         <p nxCopytext="small">
           This modal view will not close on click outside or ESC. You need to
           use the action buttons.

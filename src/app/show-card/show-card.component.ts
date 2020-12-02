@@ -20,6 +20,6 @@ export class ShowCardComponent implements OnInit {
   }
 
   getDesignNumber(): string {
-    return this.cardData ? this.cardData.design : '1';
+    return this.cardData.design ? this.cardData.design : '1';
   }
 }
