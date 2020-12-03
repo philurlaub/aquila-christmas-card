@@ -1,7 +1,15 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NxDialogService, NxModalRef } from '@aposin/ng-aquila/modal';
+import { CardDataService } from '../card-data.service';
+import { WINDOW } from '../window.provider';
 
 const BASE_PATH = '/new';
 
@@ -29,23 +37,26 @@ export class NewCardComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public dialogService: NxDialogService,
-    private router: Router
+    private router: Router,
+    private cardDataService: CardDataService,
+    @Inject(WINDOW) private window: Window
   ) {
     this.formGroup = this.formBuilder.group({
-      firstName: this.formBuilder.control('Philipp Paul', Validators.required),
-      lastName: this.formBuilder.control('Hans Peter', Validators.required),
+      firstName: this.formBuilder.control('', Validators.required),
+      lastName: this.formBuilder.control('', Validators.required),
       design: this.formBuilder.control('1', Validators.required),
-      headline: this.formBuilder.control(
-        'I wish you watt and a happy new year',
-        Validators.required
-      ),
-      text: this.formBuilder.control(
-        'Dolore et sint nostrud voluptate Lorem occaecat adipisicing laboris aute. Amet nisi aliquip occaecat quis. Amet ad ullamco aute labore reprehenderit consectetur pariatur excepteur cupidatat reprehenderit. Occaecat esse pariatur ea cillum eiusmod consectetur eu ad. Consectetur sit voluptate duis laboris duis veniam sit mollit deserunt irure ex. Velit magna elit aute laboris consectetur eiusmod nulla consequat reprehenderit nisi enim. Culpa eiusmod elit irure eu proident pariatur occaecat quis.',
-        [Validators.required, Validators.maxLength(this.maxMessageCharaters)]
-      ),
+      headline: this.formBuilder.control('', Validators.required),
+      text: this.formBuilder.control('', [
+        Validators.required,
+        Validators.maxLength(this.maxMessageCharaters),
+      ]),
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.router.url.split('?')[0]);
+    const cardData = this.cardDataService.getCardData();
+    if (cardData) { this.formGroup.patchValue(cardData); }
+  }
 
   characterCount(): number {
     return this.formGroup.get('text').value.length;
@@ -56,13 +67,30 @@ export class NewCardComponent implements OnInit {
   }
 
   showCard(): void {
+    const cardData: CardData = this.formGroup.value;
+    this.cardDataService.saveCardData(cardData);
     this.router.navigate(['/card'], {
-      queryParams: { ...this.formGroup.value },
+      queryParams: { ...cardData },
       skipLocationChange: false,
     });
   }
 
-  urlEncode(cardData: CardData): string {
-    return encodeURIComponent(JSON.stringify(this.formGroup.value));
+  getCardLink(): string {
+    const baseHref = this.window.location.href;
+    const cardLink = `${baseHref.replace(
+      'new',
+      'card'
+    )}?${this.convertToQueryParams(this.formGroup.value)}`;
+    return cardLink;
+  }
+
+  convertToQueryParams(obj: any): string {
+    const str = [];
+    for (const p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+      }
+    }
+    return str.join('&');
   }
 }

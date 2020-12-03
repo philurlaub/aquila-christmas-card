@@ -20,8 +20,10 @@ import { ShowCardComponent } from './show-card/show-card.component';
 import { NxIconModule } from '@aposin/ng-aquila/icon';
 import { NxExpertModule } from '@aposin/ng-aquila/config';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NxModalModule} from '@aposin/ng-aquila/modal';
+import { NxModalModule } from '@aposin/ng-aquila/modal';
 import { NxListComponent, NxListModule } from '@aposin/ng-aquila/list';
+import { WINDOW_PROVIDERS } from './window.provider';
+import { NxMessageModule, NxMessageToastService } from '@aposin/ng-aquila/message';
 
 @NgModule({
   declarations: [AppComponent, NewCardComponent, ShowCardComponent],
@@ -47,9 +49,10 @@ import { NxListComponent, NxListModule } from '@aposin/ng-aquila/list';
     BrowserModule,
     BrowserAnimationsModule,
     NxModalModule,
-    NxListModule
+    NxListModule,
+    NxMessageModule,
   ],
-  providers: [],
+  providers: [WINDOW_PROVIDERS, NxMessageToastService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

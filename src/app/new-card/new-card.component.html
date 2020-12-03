@@ -2,7 +2,7 @@
   <div nxRow class="nx-margin-top-2xl margin-box" nxRowJustify="around">
     <nx-card style="width: 720px">
       <h3 nxHeadline="subsection-medium" class="nx-font-weight-bold">
-        Create a new chrismas card!
+        Create a new christmas card!
       </h3>
       <div class="nx-margin-bottom-m">
         Reprehenderit irure labore incididunt cupidatat do commodo mollit ipsum
@@ -73,8 +73,8 @@
           <div nxRow class="nx-margin-top-s">
             <div nxCol="12">
               <button
-                class="nx-margin-right-m"
                 nxButton
+                class="nx-margin-right-m"
                 type="button"
                 [disabled]="formGroup.invalid"
                 (click)="showCard()"
@@ -84,6 +84,7 @@
               <button
                 nxButton
                 class="nx-margin-right-xs"
+                [disabled]="formGroup.invalid"
                 (click)="openFromTemplate()"
               >
                 Send Card
@@ -95,9 +96,18 @@
 
       <nx-popover #cardPopover>
         <ol nxList="big">
-          <li><img width="300" src="assets/card_front_1.svg" /><div>by Alex</div></li>
-          <li><img width="300" src="assets/card_front_2.svg" /><div>by Breann</div></li>
-          <li><img width="300" src="assets/card_front_3.svg" /><div>by Bobby</div></li>
+          <li>
+            <img width="300" src="assets/card_front_1.svg" />
+            <div>by Alex</div>
+          </li>
+          <li>
+            <img width="300" src="assets/card_front_2.svg" />
+            <div>by Breann</div>
+          </li>
+          <li>
+            <img width="300" src="assets/card_front_3.svg" />
+            <div>by Bobby</div>
+          </li>
         </ol>
       </nx-popover>
     </nx-card>
@@ -105,9 +115,9 @@
     <ng-template #template>
       <div nxModalContent>
         <h3 nxHeadline="subsection-medium">Copy the link below!</h3>
-        <p nxCopytext="small">
-          This modal view will not close on click outside or ESC. You need to
-          use the action buttons.
+        <p></p>
+        <p style="font-family: monospace;">
+          {{ getCardLink() }}
         </p>
       </div>
     </ng-template>

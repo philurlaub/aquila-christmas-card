@@ -4,6 +4,9 @@
       <img src="assets/logo.png" alt="Brand Logo" role="none" />
     </figure>
   </nx-header-brand>
+  <nx-header-actions *ngIf="showBackButton()">
+    <button routerLink="/new" routerLinkActive="active" nxButton="secondary small" class="back-button" type="button">Back to form</button>
+  </nx-header-actions>
 </header>
 
 <div id="content">
